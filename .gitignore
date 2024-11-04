@@ -1,6 +1,12 @@
 caps/**
 helloworld/**
+sandbox/**
+hexdmp/**
 !caps/caps.asm
 !caps/Makefile
 !helloworld/helloworld.asm
 !helloworld/Makefile
+!sandbox/sandbox.asm
+!sandbox/Makefile
+!hexdmp/hexdmp.asm
+!hexdmp/Makefile
