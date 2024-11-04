@@ -1,0 +1,4 @@
+!caps/*.asm
+!caps/Makefile
+!helloworld/*.asm
+!helloworld/Makefile
