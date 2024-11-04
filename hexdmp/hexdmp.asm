@@ -1,4 +1,4 @@
-%define buffer_size 16
+%define buffer_size 1024
 
 section .bss
 buffer: resb buffer_size
@@ -26,21 +26,21 @@ _start:
 .loop:
   mov al, byte [buffer+r9]
   mov rbx, rax
-  and rax, 0x0f
-  shr rbx, 0x04
-  mov dh, byte [digits+rbx]
+  and rax, 0x0f              ; mask out high nybble
+  shr rbx, 0x04              ; cut out low nybble
+  mov dh, byte [digits+rbx]  ; use nibbles in hex digits array as index
   mov dl, byte [digits+rax]
-  mov byte [fmt+rcx], dh
+  mov byte [fmt+rcx], dh     ; put corresponding digits into final string
   mov byte [fmt+rcx+1], dl
-  inc r9
+  add rcx, 0x03              ; move format index by 3 ("00 >0")
+  inc r9                     ; increase buffer position
   cmp r9, r8
   je .print_fmt
-  add rcx, 0x03
   cmp rcx, fmt_len
   jl .loop
 
 .print_fmt:
-  mov rax, 0x01
+  mov rax, 0x01             ; write(stdout, fmt, rcx) syscall
   mov rdi, 0x01
   mov rsi, fmt
   mov rdx, rcx
@@ -52,6 +52,6 @@ _start:
   jmp .loop
 
 .finish:
-  mov rax, 0x3c
+  mov rax, 0x3c              ; exit(0) syscall
   xor rdi, rdi
   syscall
