@@ -24,6 +24,7 @@ _start:
   mov r8, rax                ; r8 - actual buffer length
   xor r9, r9                 ; r9 - index inside buffer
 .loop:
+  xor rax, rax
   mov al, byte [buffer+r9]
   mov rbx, rax
   and rax, 0x0f              ; mask out high nybble
