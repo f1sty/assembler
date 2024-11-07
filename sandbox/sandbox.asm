@@ -1,11 +1,20 @@
 section .data
 sum: dq 0
+str1: db "testing out stosb", 10
+str1_len equ $ - str1
+str2: db ".................", 10
+
 section .bss
 
 section .text
 global _start
 _start:
   nop
+
+  mov al, 0x23
+  mov rdi, str2
+  mov rcx, str1_len
+  rep stosb
 
   mov rcx, 18
 .loop:
